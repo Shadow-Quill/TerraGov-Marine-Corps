@@ -88,7 +88,8 @@
 			return
 		var/affected = heal_limb(affecting, unskilled_penalty)
 		record_healing(user,M)
-		generate_treatment_messages(user, patient, affecting, affected)
+		if(!generate_treatment_messages(user, patient, affecting, affected))
+			continue
 		use(1)
 		affecting = null
 		while(!affecting)
@@ -133,7 +134,7 @@
 /obj/item/stack/medical/heal_pack/proc/generate_treatment_messages(mob/user, mob/patient, datum/limb/target_limb, success)
 	if(!success)
 		to_chat(user, span_warning("The wounds on [patient]'s [target_limb.display_name] have already been treated."))
-		return
+		return FALSE
 	user.visible_message(span_green("[user] treats the wounds on [patient]'s [target_limb.display_name] with [src]."),
 	span_green("You treat the wounds on [patient]'s [target_limb.display_name] with [src].") )
 
@@ -148,7 +149,7 @@
 /obj/item/stack/medical/heal_pack/gauze/generate_treatment_messages(mob/user, mob/patient, datum/limb/target_limb, success)
 	if(!success)
 		to_chat(user, span_warning("The wounds on [patient]'s [target_limb.display_name] have already been treated."))
-		return
+		return FALSE
 	user.visible_message(span_green("[user] bandages [patient]'s [target_limb.display_name]."),
 		span_green("You bandage [patient]'s [target_limb.display_name].") )
 
@@ -164,7 +165,7 @@
 /obj/item/stack/medical/heal_pack/ointment/generate_treatment_messages(mob/user, mob/patient, datum/limb/target_limb, success)
 	if(!success)
 		to_chat(user, span_warning("The wounds on [patient]'s [target_limb.display_name] have already been treated."))
-		return
+		return FALSE
 	user.visible_message(span_green("[user] salves wounds on [patient]'s [target_limb.display_name]."),
 	span_green("You salve wounds on [patient]'s [target_limb.display_name]."))
 
@@ -196,7 +197,7 @@
 /obj/item/stack/medical/heal_pack/advanced/bruise_pack/generate_treatment_messages(mob/user, mob/patient, datum/limb/target_limb, success)
 	if(!success)
 		to_chat(user, span_warning("The wounds on [patient]'s [target_limb.display_name] have already been treated."))
-		return
+		return FALSE
 	user.visible_message(span_green("[user] cleans [patient]'s [target_limb.display_name] and seals its wounds with bioglue."),
 		span_green("You clean and seal all the wounds on [patient]'s [target_limb.display_name]."))
 
@@ -211,7 +212,7 @@
 /obj/item/stack/medical/heal_pack/advanced/burn_pack/generate_treatment_messages(mob/user, mob/patient, datum/limb/target_limb, success)
 	if(!success)
 		to_chat(user, span_warning("The wounds on [patient]'s [target_limb.display_name] have already been treated."))
-		return
+		return FALSE
 	user.visible_message(span_green("[user] covers the wounds on [patient]'s [target_limb.display_name] with regenerative membrane."),
 	span_green("You cover the wounds on [patient]'s [target_limb.display_name] with regenerative membrane."))
 
